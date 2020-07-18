@@ -2,13 +2,70 @@ import React from 'react';
 import { ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import theme from './theme';
-import Item from './Item';
+import Menu from './Menu';
+import TaskActivity from "./TaskActivity";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
+import Drawer from "@material-ui/core/Drawer";
+import makeStyles from "@material-ui/core/styles/makeStyles";
 
-const App = () => (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <Item />
-    </ThemeProvider>
-);
+const drawerWidth = 240;
 
-export default App;
+const useStyles = makeStyles((theme) => ({
+    root: {
+        display: 'flex',
+    },
+    appBar: {
+        zIndex: theme.zIndex.drawer + 2,
+    },
+    drawer: {
+        width: drawerWidth,
+        flexShrink: 0,
+    },
+    drawerPaper: {
+        width: drawerWidth,
+    },
+    drawerContainer: {
+        overflow: 'auto',
+    },
+    content: {
+        flexGrow: 1,
+        padding: theme.spacing(3),
+    },
+    activity: {
+        padding: theme.spacing(3),
+    }
+}));
+
+export default function App() {
+    const styles = useStyles();
+
+    return (
+        <ThemeProvider theme={theme}>
+        <div className={styles.root}>
+            <CssBaseline />
+            <AppBar position="fixed" className={styles.appBar}>
+                <Toolbar>
+                    <Typography variant="h6" noWrap>
+                        EasyTodoJ
+                    </Typography>
+                </Toolbar>
+            </AppBar>
+            <Drawer
+                className={styles.drawer}
+                variant="permanent"
+                classes={{
+                    paper: styles.drawerPaper,
+                }}>
+                <Toolbar />
+                <div className={styles.drawerContainer}>
+                    <Menu />
+                </div>
+            </Drawer>
+            <main className={styles.content}>
+                <TaskActivity styles={styles.activity}/>
+            </main>
+        </div>
+        </ThemeProvider>
+    );}

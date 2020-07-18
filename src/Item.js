@@ -7,10 +7,10 @@ import Button from "@material-ui/core/Button";
 const useStyles = makeStyles(theme => ({
     root: {
         margin: theme.spacing(3),
-        width: 345,
+        width: 250,
     },
     media: {
-        height: 180,
+        height: 130,
     },
     title: {
         color: theme.palette.primary.main
