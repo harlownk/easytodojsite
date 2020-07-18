@@ -9,25 +9,13 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 import Grid from "@material-ui/core/Grid";
 import TaskDetails from "./TaskDetails";
 
-
-const useStyles = makeStyles((theme) => ({
-    root: {
-        borderStyle: "solid",
-        borderWidth: "1px",
-        borderColor: theme.palette.grey["700"],
-        marginBottom: "3px",
-        zIndex: theme.zIndex.root + 1,
-        boxShadow: theme.shadows[5],
-    },
-}));
-
-const TaskActivity = () => {
-    let style = useStyles();
+const TaskActivity = ({ styles }) => {
+    let style = styles;
     let listItems = () => {
         let items = [];
         for (let i = 0; i < 25; i++) {
             items.push(
-                <ListItem elevation={4} classes={{root:style.root}}>
+                <ListItem classes={{root:style.listItem}}>
                     <ListItemIcon>
                         <CheckBox edge="start"
                                   checked={1}
@@ -43,14 +31,13 @@ const TaskActivity = () => {
     let items = listItems();
     return (
         <div>
-            <Toolbar />
-            <Grid container direction="row" justify="space-between" alignItems="stretch" spacing={3} >
-                <Grid item xs={9}>
-                    <List>
+            <Grid container direction="row" justify="space-around" alignItems="stretch" spacing={2} sm>
+                <Grid item xs={7}>
+                    <List className={styles.list}>
                         {items}
                     </List>
                 </Grid>
-                <Grid item xs={3}  style={{height:"100px"}}>
+                <Grid item xs={5}>
                     <TaskDetails styles={style}/>
                 </Grid>
             </Grid>

@@ -31,11 +31,23 @@ const useStyles = makeStyles((theme) => ({
     },
     content: {
         flexGrow: 1,
-        padding: theme.spacing(3),
+        padding: theme.spacing(1),
     },
     activity: {
-        padding: theme.spacing(3),
-    }
+        padding: theme.spacing(1),
+    },
+    list: {
+        padding: 0,
+    },
+    listItem: {
+        borderStyle: "solid",
+        borderWidth: "1px",
+        borderColor: theme.palette.grey["700"],
+        marginTop: "3px",
+        marginBottom: "3px",
+        zIndex: theme.zIndex.root + 1,
+        boxShadow: theme.shadows[5],
+    },
 }));
 
 export default function App() {
@@ -64,7 +76,8 @@ export default function App() {
                 </div>
             </Drawer>
             <main className={styles.content}>
-                <TaskActivity styles={styles.activity}/>
+                <Toolbar />
+                <TaskActivity styles={styles}/>
             </main>
         </div>
         </ThemeProvider>
