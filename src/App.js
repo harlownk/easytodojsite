@@ -1,14 +1,9 @@
 import React from 'react';
-import { ThemeProvider } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import theme from './theme';
-import Menu from './Menu';
-import TaskActivity from "./TaskActivity";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
-import Drawer from "@material-ui/core/Drawer";
+
 import makeStyles from "@material-ui/core/styles/makeStyles";
+import AppWithStyles from "./AppWithStyles";
+import {ThemeProvider} from "@material-ui/styles";
+import theme from "./theme";
 
 const drawerWidth = 240;
 
@@ -38,6 +33,9 @@ const useStyles = makeStyles((theme) => ({
     },
     list: {
         padding: 0,
+        overflow:"auto",
+        height:"91vh",
+        paddingRight: "10px",
     },
     listItem: {
         borderStyle: "solid",
@@ -48,37 +46,26 @@ const useStyles = makeStyles((theme) => ({
         zIndex: theme.zIndex.root + 1,
         boxShadow: theme.shadows[5],
     },
+    login: {
+        width:"700px",
+        height:"500px",
+    },
+    loginGrid: {
+        height:"90vh",
+    }
 }));
 
+/**
+ * To access the styles and Material Theme, we need to use hooks that dont work with classes, so we get the styles and
+ * pass it to the elements that need them.
+ * @returns {*}
+ * @constructor
+ */
 export default function App() {
     const styles = useStyles();
-
     return (
         <ThemeProvider theme={theme}>
-        <div className={styles.root}>
-            <CssBaseline />
-            <AppBar position="fixed" className={styles.appBar}>
-                <Toolbar>
-                    <Typography variant="h6" noWrap>
-                        EasyTodoJ
-                    </Typography>
-                </Toolbar>
-            </AppBar>
-            <Drawer
-                className={styles.drawer}
-                variant="permanent"
-                classes={{
-                    paper: styles.drawerPaper,
-                }}>
-                <Toolbar />
-                <div className={styles.drawerContainer}>
-                    <Menu />
-                </div>
-            </Drawer>
-            <main className={styles.content}>
-                <Toolbar />
-                <TaskActivity styles={styles}/>
-            </main>
-        </div>
+            <AppWithStyles styles={styles}/>
         </ThemeProvider>
-    );}
+    );
+}
