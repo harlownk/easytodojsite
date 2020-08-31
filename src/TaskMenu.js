@@ -7,7 +7,7 @@ import Divider from "@material-ui/core/Divider";
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 
-const Menu = () => {
+const TaskMenu = () => {
     return (
         <div>
             <List>
@@ -31,4 +31,4 @@ const Menu = () => {
     )
 };
 
-export default Menu;
+export default TaskMenu;

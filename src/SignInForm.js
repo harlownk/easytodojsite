@@ -52,7 +52,7 @@ export default class SignInForm extends React.Component {
                 .catch( e => {
                     console.log(e);
                 });
-            console.log(result);
+            // console.log(result);
         }
     }
 

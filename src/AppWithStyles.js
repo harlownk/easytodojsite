@@ -1,12 +1,10 @@
 import React from "react";
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Menu from './Menu';
-import TaskActivity from "./TaskActivity";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-import Drawer from "@material-ui/core/Drawer";
 import UserAuth from "./UserAuth";
+import MainActivity from "./MainActivity";
 
 export default class AppWithStyles extends React.Component {
 
@@ -31,24 +29,18 @@ export default class AppWithStyles extends React.Component {
                 let claims = this.parseJwt(currToken);
                 let date = new Date();
                 date.setTime(claims.exp * 1000);
-                console.log(date);
-                console.log(new Date());
                 loggedIn = (date > (new Date()));
                 if (!loggedIn) {
                     localStorage.removeItem("currToken");
                 }
             } else {
-                // localStorage.removeItem("currToken");
+                localStorage.removeItem("currToken");
             }
         } else {
             loggedIn = false;
         }
         return loggedIn;
     }
-
-    weakVerifyJwt = (token) => {
-        return (token.split('.').length === 3);
-    };
 
     // private functions
     parseJwt = (token) => {
@@ -59,33 +51,19 @@ export default class AppWithStyles extends React.Component {
         }
     };
 
+    weakVerifyJwt = (token) => {
+        return (token.split('.').length === 3);
+    };
+
 
     render() {
         let styles = this.props.styles;
         let display;  // The main display that we want to produce.
         if (this.state["loggedIn"]) {
-            display = (
-                <>
-                    <Drawer
-                        className={styles.drawer}
-                        variant="permanent"
-                        classes={{
-                            paper: styles.drawerPaper,
-                        }}>
-                        <Toolbar />
-                        <div className={styles.drawerContainer}>
-                            <Menu />
-                        </div>
-                    </Drawer>
-                    <main className={styles.content}>
-                        <Toolbar />
-                        <TaskActivity styles={styles}/>
-                    </main>
-                </>);
+            display = <MainActivity styles={styles}/>;
         } else {
             display = (
                 <main className={styles.content}>
-                    <Toolbar />
                     <UserAuth styles={styles} setLoginState={this.setLoginState}/>
                 </main>
                 );
@@ -107,10 +85,10 @@ export default class AppWithStyles extends React.Component {
 
     // Required for render.
     setLoginState(token) {
+        localStorage.setItem("currToken", token);
         this.setState({
             "loggedIn": true
         });
-        localStorage.setItem("currToken", token);
     }
 
 
