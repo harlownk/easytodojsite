@@ -5,6 +5,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import UserAuth from "./UserAuth";
 import MainActivity from "./MainActivity";
+import {weakVerifyJwt, isTokenCurrent} from "./util.js";
 
 export default class AppWithStyles extends React.Component {
 
@@ -23,13 +24,10 @@ export default class AppWithStyles extends React.Component {
         let loggedIn;
         let currToken = localStorage.getItem("currToken");
         if (currToken) {
-            if (this.weakVerifyJwt(currToken)) {
+            if (weakVerifyJwt(currToken)) {
                 // Check if it is expired or not.
                 // Parse the token.
-                let claims = this.parseJwt(currToken);
-                let date = new Date();
-                date.setTime(claims.exp * 1000);
-                loggedIn = (date > (new Date()));
+                loggedIn = isTokenCurrent(currToken);
                 if (!loggedIn) {
                     localStorage.removeItem("currToken");
                 }
@@ -41,20 +39,6 @@ export default class AppWithStyles extends React.Component {
         }
         return loggedIn;
     }
-
-    // private functions
-    parseJwt = (token) => {
-        try {
-            return JSON.parse(atob(token.split('.')[1]));
-        } catch (e) {
-            return null;
-        }
-    };
-
-    weakVerifyJwt = (token) => {
-        return (token.split('.').length === 3);
-    };
-
 
     render() {
         let styles = this.props.styles;

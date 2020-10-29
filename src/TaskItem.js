@@ -19,11 +19,16 @@ export default class TaskItem extends React.Component {
     handleCheck = (event) => {
         this.setState({
             completed: event.target.checked,
+        }, () => {
+            // Send an update on the API to change the task to completed
+            let newTask = JSON.parse(JSON.stringify(this.props.task));
+            newTask.completed = this.state.completed;
+            this.props.updateTask(newTask);
         });
     };
 
     seeDetails() {
-        this.props.viewDetails("Current Task");
+        this.props.viewDetails(this.props.task);
     }
 
     render() {

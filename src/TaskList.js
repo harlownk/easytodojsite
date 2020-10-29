@@ -11,11 +11,15 @@ export default class TaskList extends React.Component {
         let domItems = [];
         for (let i = 0; i < taskList.length; i++) {
             domItems.push(
-                <TaskItem key={taskList[i].taskId}
+                // Todo, remove the key, desc, and completed props instead render them from the task prop provided.
+                <TaskItem task={taskList[i]}
+                          key={taskList[i].taskId}
                           description={taskList[i].taskDescription}
                           completed={taskList[i].completed}
                           styles={styles}
-                          viewDetails={this.props.viewDetails}/>
+                          viewDetails={this.props.viewDetails}
+                          updateTask={this.props.updateTask}
+                />
             );
         }
         return (
